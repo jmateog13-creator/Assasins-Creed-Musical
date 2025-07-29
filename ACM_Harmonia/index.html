@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABSTERGO ANIMUS - Projecte Fragments de l'Harmonia</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="animus-grid"></div>
+    <div class="animus-overlay"></div>
+    
+    <!-- PANTALLA D'INICI -->
+    <div class="start-screen" id="startScreen">
+        <div class="logo-container">
+            <div class="main-title">ANIMUS 4.3</div>
+            <div class="subtitle-main">Projecte Fragments de l'Harmonia</div>
+        </div>
+        <div class="menu-buttons">
+            <button class="menu-btn" onclick="game.startGame()">🎮 INICIAR MISSIÓ</button>
+            <button class="menu-btn" onclick="ui.showInstructions()">📋 INSTRUCCIONS</button>
+        </div>
+    </div>
+
+    <!-- MODAL D'INSTRUCCIONS -->
+    <div class="instructions-modal" id="instructionsModal">
+        <div class="instructions-content">
+            <div class="instructions-header">
+                <h2 class="instructions-title">📋 BRIEFING DE MISSIÓ</h2>
+                <button class="close-modal-btn" onclick="ui.closeInstructions()">✕</button>
+            </div>
+            <div class="instructions-body">
+                <div class="instructions-section">
+                    <h3>🎯 OBJECTIU PRINCIPAL</h3>
+                    <p>Ets un agent d'Abstergo Industries utilitzant l'Animus 4.3 per explorar les memòries genètiques d'un avantpassat Assassí. La teva missió és recuperar 8 Fragments de l'Harmonia perduts a través de la història musical humana.</p>
+                </div>
+                
+                <div class="instructions-section">
+                    <h3>⚔️ AMENACES TEMPLARS</h3>
+                    <p>Durant cada època històrica, et trobaràs amb agents Templars que intentaran impedir la teva missió:</p>
+                    <ul>
+                        <li><strong>Edat Mitjana:</strong> Cavallers Templars en monestirs</li>
+                        <li><strong>Renaixement:</strong> Assassins renegats treballant per Borgia</li>
+                        <li><strong>Barroc:</strong> Espies Templars a Versalles</li>
+                        <li><strong>Classicisme:</strong> Nobles austríacs sospitosos</li>
+                        <li><strong>Romanticisme:</strong> Assassins renegats a París</li>
+                        <li><strong>Avantguarda:</strong> Gran Mestre Templar</li>
+                        <li><strong>Era Electrònica:</strong> Agents d'Abstergo</li>
+                        <li><strong>Era Digital:</strong> Gran Mestre Suprem (Boss Final)</li>
+                    </ul>
+                </div>
+                
+                <div class="instructions-section">
+                    <h3>🎵 SISTEMA DE JOC</h3>
+                    <p>Cada època conté:</p>
+                    <ul>
+                        <li><strong>Context històric:</strong> Briefing de la situació</li>
+                        <li><strong>Desafiament principal:</strong> Pregunta sobre l'harmonia de l'època</li>
+                        <li><strong>Validació adicional:</strong> Pregunta de seguiment</li>
+                        <li><strong>Recompensa:</strong> Fragment de l'Harmonia per al teu inventari</li>
+                    </ul>
+                </div>
+                
+                <div class="instructions-section">
+                    <h3>💖 SISTEMA DE VIDES</h3>
+                    <p>Tens 3 vides per època. Si falles totes les respostes, els Templars triomfaran i hauràs de reiniciar. Les vides es restauren al passar a la següent època.</p>
+                </div>
+                
+                <div class="instructions-section">
+                    <h3>🗂️ BASE DE DADES</h3>
+                    <p>Pots consultar els fragments recuperats en qualsevol moment utilitzant el botó "Consultar Base de Dades". Cada fragment conté informació sobre l'harmonia de la seva època.</p>
+                </div>
+                
+                <div class="instructions-section">
+                    <h3>🏆 VICTÒRIA</h3>
+                    <p>Recupera els 8 fragments per derrotar definitivament els Templars i salvar la història de l'harmonia musical per a la humanitat.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL D'ÈPOCA -->
+    <div class="era-modal" id="eraModal">
+        <div class="era-content">
+            <div class="era-header">
+                <h2 class="era-title" id="eraTitle">SINCRONITZACIÓ TEMPORAL</h2>
+                <button class="close-modal-btn" onclick="ui.closeEraModal()">✕</button>
+            </div>
+            <div class="era-body" id="eraBody">
+                <!-- El contingut es carregarà dinàmicament -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- CONTENIDOR PRINCIPAL DEL JOC -->
+    <div class="game-container hidden" id="gameContainer">
+        <div class="abstergo-header">
+            <div class="header">
+                <h1>ANIMUS 4.3<br/>PROJECTE FRAGMENTS</h1>
+                <p class="subtitle">Sistema de Recuperació de Memòries Genètiques</p>
+            </div>
+        </div>
+
+        <div class="animus-hud">
+            <div class="sync-progress">
+                <div class="sync-label">Sincronització de Memòries</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar"></div>
+                </div>
+            </div>
+            <div class="lives-display">
+                VIDES: <span id="livesDisplay">❤️❤️❤️</span>
+            </div>
+        </div>
+
+        <div id="gameContent">
+            <!-- El contingut del joc es carregarà aquí -->
+        </div>
+
+        <!-- MODAL INVENTARI -->
+        <div class="inventory-modal" id="inventoryModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">🗂️ BASE DE DADES - FRAGMENTS</div>
+                    <button class="close-btn" onclick="ui.closeInventory()">✕</button>
+                </div>
+                <div id="inventoryList"></div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 25px 0;">
+            <button class="action-btn" onclick="ui.showInventory()">🗂️ Consultar Base de Dades</button>
+        </div>
+    </div>
+
+    <!-- Scripts carregats en ordre -->
+    <script src="gameData.js"></script>
+    <script src="ui.js"></script>
+    <script src="game.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
